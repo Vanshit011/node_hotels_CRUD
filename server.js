@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
 const db = require('./db');
+require('dotenv').config();
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
+const PORT = process.env.PORT || 3000;
 
 //API
 app.get('/', function (req, res) {
@@ -19,6 +21,7 @@ app.use('/menu', MenuItemRoutes);
 
 
 //server 
-app.listen(3000, () => {
+
+app.listen(PORT, () => {
     console.log('server is live')
 })
