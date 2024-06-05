@@ -62,9 +62,26 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// PERSON Table
+// PROFILE route
 
-router.get('/',jwtAuthMiddleware, async (req, res) => {
+router.get('/profile', jwtAuthMiddleware, async (req, res) => {
+    try{
+        const userData = req.userpayload;
+        // console.log("User Data: ", userData);
+
+        const userId = userData.id;
+        const user = await Person.findById(userId);
+
+        res.status(200).json({user});
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
+// PERSON route
+
+router.get('/', jwtAuthMiddleware, async (req, res) => {
     try {
         const data = await Person.find();
         console.log('data fetched');
@@ -77,7 +94,7 @@ router.get('/',jwtAuthMiddleware, async (req, res) => {
 
 //parametrised API
 
-router.get('/:workType',jwtAuthMiddleware, async (req, res) => {
+router.get('/:workType', jwtAuthMiddleware, async (req, res) => {
 
     try {
         const workType = req.params.workType;

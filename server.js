@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
-const db = require('./db');
+const connection = require("./db");
 require('dotenv').config();
 const passport = require('./auth');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
+
+// database connection
+connection();
 
 const PersonRoutes = require('././routes/PersonRoutes');
 const MenuItemRoutes = require('././routes/menuItemRoutes');
